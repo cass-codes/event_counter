@@ -3,5 +3,18 @@
   "version": "1.0.0",
   "description": "Can log \"hello world\" and \"goodbye world\" to the console! (atm)",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "event-counter"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cass-codes/event_counter.git"
+  },
+  "author": "cass-codes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cass-codes/event_counter/issues"
+  },
+  "homepage": "https://github.com/cass-codes/event_counter#readme"
 }
