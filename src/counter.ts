@@ -1,23 +1,21 @@
 const MAX_TIME = 5*60 //5 minute max in seconds
+var SortedMap = require("collections/sorted-map");
 
 export class Counter {
   // currentCount: number = 1;
 
-  counterMap = new Map<number, number>();
+  counterMap = new SortedMap();
+  now = Math.floor(Date.now() / 1000);  //converting to a second rather than a millisecond
 
 
   logEvent() {
-    // this.currentCount++;
-    // the above doesn't work because what we really want to know is /when/ something happened
+    console.log('now looks like: ', this.now)
 
-    var now = Math.floor(Date.now() / 1000); //converting to a second rather than a millisecond
-    console.log('now looks like: ', now)
-
-    if (this.counterMap.has(now)) {
-      const current = this.counterMap.get(now);
-      this.counterMap.set(now, current + 1);
+    if (this.counterMap.has(this.now)) {
+      const current = this.counterMap.get(this.now);
+      this.counterMap.set(this.now, current + 1);
     } else {
-      this.counterMap.set(now, 1);
+      this.counterMap.set(this.now, 1);
     }
     
   }
@@ -29,6 +27,19 @@ export class Counter {
       time = MAX_TIME
     
     console.log('Current Map: ', this.counterMap)
+
+    var max = this.now;
+    var min = this.now - time;
+    var total = 0;
+
+    this.counterMap.forEach((value, key) => {
+      console.log('key: ', key, 'value: ', value)
+      if (key >= min && key <= max ) {
+        total += value;
+      }
+    });
+
+    return total;
     
   }
 }
