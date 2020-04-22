@@ -6,6 +6,7 @@ export class Counter {
   logEvent() 
   {
     this.currentCount++;
+    
     // the above doesn't work because what we really want to know is /when/ something happened
   }
 
