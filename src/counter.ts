@@ -1,16 +1,11 @@
-const MAX_TIME = 5*60 //5 minute max in seconds
+const MAX_TIME = 20; // commenting out for testing ease - 5*60 //5 minute max in seconds
 var SortedMap = require("collections/sorted-map");
 
 export class Counter {
-  // currentCount: number = 1;
-
   counterMap = new SortedMap();
-  // now = Math.floor(Date.now() / 1000);  //converting to a second rather than a millisecond
-
 
   logEvent() {
-    var now = Math.floor(Date.now() / 1000)
-    // console.log('now looks like: ', now)
+    var now = this._now();
 
     if (this.counterMap.has(now)) {
       const current = this.counterMap.get(now);
@@ -23,31 +18,33 @@ export class Counter {
 
   getEventCount(time: number = MAX_TIME)
   {
-    //handle things if they ask for all time (no param) or a length longer than the max time
     if(time > MAX_TIME)
       time = MAX_TIME
     
-    // console.log('Current Map: ', this.counterMap)
-
-    var now = Math.floor(Date.now() / 1000);
+    var now = this._now();
     var max = now;
     var min = now - time;
-    // console.log('max: ', max, ', min: ', min)
     var total = 0;
 
     this.counterMap.forEach((value, key) => {
-      // console.log('key: ', key, 'value: ', value)
       if (key >= min && key <= max ) {
         total += value;
       }
     });
-
-    // console.log('total: ', total);
     this.refreshMap();
     return total;
   }
 
   refreshMap() {
+    var now = this._now();
+    this.counterMap = this.counterMap.filter((value, key) => {
+      console.log('value: ', value, ' key: ', key, ' now: ', now);
+      return key > (now - MAX_TIME);
+    })
+    console.log('new map: ', this.counterMap.length);
+  }
 
+  _now() {
+    return Math.floor(Date.now() / 1000);
   }
 }

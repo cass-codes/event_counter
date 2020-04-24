@@ -11,6 +11,50 @@ var Main = /** @class */ (function () {
         this.testMultipleInsideTimeFrame();
         this.testMultipleOutsideTimeFrame();
         this.testSomeInTimeFrameSomeOut();
+        this.testMaxesOutTimeFrame();
+        this.testContinuousAdditionTimeout();
+        this.testEventCountDoesntChange();
+    };
+    Main.prototype.testEventCountDoesntChange = function () {
+        var myCounter = new counter_1.Counter();
+        for (var i = 0; i < 5; i++) {
+            myCounter.logEvent();
+        }
+        var initResult = myCounter.getEventCount();
+        var success = true;
+        for (var j = 0; j < 10; j++) {
+            var testResult = myCounter.getEventCount();
+            if (testResult !== initResult) {
+                success = false;
+            }
+        }
+        if (success) {
+            console.log('result did not change no matter how many times we called inside the time frame');
+        }
+        else {
+            console.log('result changed when we called it again inside the alloted time frame');
+        }
+    };
+    Main.prototype.testContinuousAdditionTimeout = function () {
+        var myCounter = new counter_1.Counter();
+        for (var i = 0; i < 30; i++) {
+            myCounter.logEvent();
+            this._sleep(1000); // sleep for a second
+        }
+        var result = myCounter.getEventCount();
+        console.log('result (should be 20): ', result);
+    };
+    Main.prototype.testMaxesOutTimeFrame = function () {
+        var myCounter = new counter_1.Counter();
+        for (var i = 0; i < 5; i++) {
+            myCounter.logEvent();
+        }
+        this._sleep(30000); //sleep 30 seconds (currently MAX is set to 20 seconds)
+        for (var i = 0; i < 5; i++) {
+            myCounter.logEvent();
+        }
+        var result = myCounter.getEventCount();
+        console.log('result (should be 5): ', result);
     };
     Main.prototype.testSomeInTimeFrameSomeOut = function () {
         var myCounter = new counter_1.Counter();

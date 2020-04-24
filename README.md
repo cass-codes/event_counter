@@ -13,3 +13,4 @@ To run the suite of tests:
 * Navigate to the root directory of the project
 * `> tsc src/*.ts`
 * `> node src/index.js`
+Note: the whole thing does take a few mintues to run as it's currently implemented asynchronously. 

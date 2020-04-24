@@ -11,10 +11,56 @@ class Main {
     this.testMultipleInsideTimeFrame();
     this.testMultipleOutsideTimeFrame();
     this.testSomeInTimeFrameSomeOut();
+    this.testMaxesOutTimeFrame();
+    this.testContinuousAdditionTimeout();
+    this.testEventCountDoesntChange();
+  }
+
+  testEventCountDoesntChange() {
+    const myCounter: Counter = new Counter();
+    for (var i = 0; i < 5; i++) {
+      myCounter.logEvent();
+    }
+    var initResult = myCounter.getEventCount();
+    var success: boolean = true;
+    for (var j = 0; j < 10; j++) {
+      var testResult = myCounter.getEventCount();
+      if (testResult !== initResult){
+        success = false;
+      }
+    }
+    if (success) {
+      console.log('result did not change no matter how many times we called inside the time frame')
+    } else {
+      console.log('result changed when we called it again inside the alloted time frame')
+    }
+  }
+
+  testContinuousAdditionTimeout () {
+    const myCounter: Counter = new Counter();
+    for (var i = 0; i < 30; i++) {
+      myCounter.logEvent();
+      this._sleep(1000); // sleep for a second
+    }
+    var result = myCounter.getEventCount(); 
+    console.log('result (should be 20): ', result)
+  }
+
+  testMaxesOutTimeFrame() {
+    const myCounter: Counter = new Counter();
+    for (var i =0; i < 5; i++) {
+      myCounter.logEvent();
+    }
+    this._sleep(30000); //sleep 30 seconds (currently MAX is set to 20 seconds)
+    for (var i =0; i < 5; i++) {
+      myCounter.logEvent();
+    }
+    var result = myCounter.getEventCount();
+    console.log('result (should be 5): ', result)
   }
 
   testSomeInTimeFrameSomeOut() {
-    const myCounter = new Counter();
+    const myCounter: Counter = new Counter();
     for (var i =0; i < 5; i++) {
       myCounter.logEvent();
     }
@@ -27,7 +73,7 @@ class Main {
   }
 
   testMultipleOutsideTimeFrame() {
-    const myCounter = new Counter();
+    const myCounter: Counter = new Counter();
     for (var i =0; i < 10; i++) {
       myCounter.logEvent();
     }
@@ -38,7 +84,7 @@ class Main {
 
 
   testMultipleInsideTimeFrame() {
-    const myCounter = new Counter();
+    const myCounter: Counter = new Counter();
     for (var i =0; i < 10; i++) {
       myCounter.logEvent();
     }
@@ -47,14 +93,14 @@ class Main {
   }
 
   testAskingInsideTimeFrame() {
-    const myCounter = new Counter();
+    const myCounter: Counter = new Counter();
     myCounter.logEvent();
     var result = myCounter.getEventCount(1); //in the last second
     console.log('result (should be 1): ', result)
   }
 
   testAskingOutsideTimeFrame() {
-    const myCounter = new Counter();
+    const myCounter: Counter = new Counter();
     myCounter.logEvent();
     this._sleep(3000); //waiting 3 seconds
     var result = myCounter.getEventCount(1);
@@ -62,8 +108,8 @@ class Main {
   }
 
   _sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
+    const date: number = Date.now();
+    let currentDate: number = null;
     do {
       currentDate = Date.now();
     } while (currentDate - date < milliseconds);

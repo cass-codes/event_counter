@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var MAX_TIME = 5 * 60; //5 minute max in seconds
+var MAX_TIME = 20; // commenting out for testing ease - 5*60 //5 minute max in seconds
 var SortedMap = require("collections/sorted-map");
 var Counter = /** @class */ (function () {
     function Counter() {
@@ -41,6 +41,13 @@ var Counter = /** @class */ (function () {
         return total;
     };
     Counter.prototype.refreshMap = function () {
+        // TODO Implementation
+        var now = Math.floor(Date.now() / 1000);
+        this.counterMap = this.counterMap.filter(function (value, key) {
+            console.log('value: ', value, ' key: ', key, ' now: ', now);
+            return key > (now - MAX_TIME);
+        });
+        console.log('new map: ', this.counterMap.length);
     };
     return Counter;
 }());
