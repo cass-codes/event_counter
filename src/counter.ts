@@ -5,41 +5,49 @@ export class Counter {
   // currentCount: number = 1;
 
   counterMap = new SortedMap();
-  now = Math.floor(Date.now() / 1000);  //converting to a second rather than a millisecond
+  // now = Math.floor(Date.now() / 1000);  //converting to a second rather than a millisecond
 
 
   logEvent() {
-    console.log('now looks like: ', this.now)
+    var now = Math.floor(Date.now() / 1000)
+    // console.log('now looks like: ', now)
 
-    if (this.counterMap.has(this.now)) {
-      const current = this.counterMap.get(this.now);
-      this.counterMap.set(this.now, current + 1);
+    if (this.counterMap.has(now)) {
+      const current = this.counterMap.get(now);
+      this.counterMap.set(now, current + 1);
     } else {
-      this.counterMap.set(this.now, 1);
+      this.counterMap.set(now, 1);
     }
     
   }
 
-  getCount(time: number = MAX_TIME)
+  getEventCount(time: number = MAX_TIME)
   {
     //handle things if they ask for all time (no param) or a length longer than the max time
     if(time > MAX_TIME)
       time = MAX_TIME
     
-    console.log('Current Map: ', this.counterMap)
+    // console.log('Current Map: ', this.counterMap)
 
-    var max = this.now;
-    var min = this.now - time;
+    var now = Math.floor(Date.now() / 1000);
+    var max = now;
+    var min = now - time;
+    // console.log('max: ', max, ', min: ', min)
     var total = 0;
 
     this.counterMap.forEach((value, key) => {
-      console.log('key: ', key, 'value: ', value)
+      // console.log('key: ', key, 'value: ', value)
       if (key >= min && key <= max ) {
         total += value;
       }
     });
 
+    // console.log('total: ', total);
+    this.refreshMap();
     return total;
-    
+  }
+
+  refreshMap() {
+
   }
 }
