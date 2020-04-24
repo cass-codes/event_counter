@@ -38,10 +38,8 @@ export class Counter {
   refreshMap() {
     var now = this._now();
     this.counterMap = this.counterMap.filter((value, key) => {
-      console.log('value: ', value, ' key: ', key, ' now: ', now);
       return key > (now - MAX_TIME);
     })
-    console.log('new map: ', this.counterMap.length);
   }
 
   _now() {
