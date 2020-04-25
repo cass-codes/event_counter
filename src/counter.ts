@@ -1,4 +1,4 @@
-const MAX_TIME = 20; // commenting out for testing ease - 5*60 //5 minute max in seconds
+const MAX_TIME = 5*60; //5 minute max in seconds
 var SortedMap = require("collections/sorted-map");
 
 export class Counter {
@@ -16,10 +16,9 @@ export class Counter {
     
   }
 
-  getEventCount(time: number = MAX_TIME)
-  {
+  getEventCount(time: number = MAX_TIME) {
     if(time > MAX_TIME)
-      time = MAX_TIME
+      time = MAX_TIME;
     
     var now = this._now();
     var max = now;
@@ -39,7 +38,7 @@ export class Counter {
     var now = this._now();
     this.counterMap = this.counterMap.filter((value, key) => {
       return key > (now - MAX_TIME);
-    })
+    });
   }
 
   _now() {

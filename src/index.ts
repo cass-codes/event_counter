@@ -2,10 +2,10 @@ import { Counter } from './counter'
 class Main {
 
   constructor() {
-    this.run()
+    this.runTests();
   }
 
-  run() {
+  runTests() {
     this.testAskingOutsideTimeFrame();
     this.testAskingInsideTimeFrame();
     this.testMultipleInsideTimeFrame();
@@ -14,6 +14,16 @@ class Main {
     this.testMaxesOutTimeFrame();
     this.testContinuousAdditionTimeout();
     this.testEventCountDoesntChange();
+    this.testHighVolume(); 
+  }
+
+  testHighVolume() {
+    const myCounter: Counter = new Counter();
+    for(var i = 0; i < 1000000; i++) {
+      myCounter.logEvent();
+    }
+    var result = myCounter.getEventCount();
+    console.log('result (should be 1000000): ', result);
   }
 
   testEventCountDoesntChange() {
@@ -30,9 +40,9 @@ class Main {
       }
     }
     if (success) {
-      console.log('result did not change no matter how many times we called inside the time frame')
+      console.log('result did not change no matter how many times we called inside the time frame');
     } else {
-      console.log('result changed when we called it again inside the alloted time frame')
+      console.log('result changed when we called it again inside the alloted time frame');
     }
   }
 
@@ -40,10 +50,10 @@ class Main {
     const myCounter: Counter = new Counter();
     for (var i = 0; i < 30; i++) {
       myCounter.logEvent();
-      this._sleep(1000); // sleep for a second
+      this._sleep(12 * 1000); // sleep for 12 seconds (total of 6 minutes)
     }
     var result = myCounter.getEventCount(); 
-    console.log('result (should be 20): ', result)
+    console.log('result (should be 25): ', result);
   }
 
   testMaxesOutTimeFrame() {
@@ -51,12 +61,12 @@ class Main {
     for (var i =0; i < 5; i++) {
       myCounter.logEvent();
     }
-    this._sleep(30000); //sleep 30 seconds (currently MAX is set to 20 seconds)
+    this._sleep((5 * 60 * 1000) + 2); //sleep 5:02 minutes 
     for (var i =0; i < 5; i++) {
       myCounter.logEvent();
     }
     var result = myCounter.getEventCount();
-    console.log('result (should be 5): ', result)
+    console.log('result (should be 5): ', result);
   }
 
   testSomeInTimeFrameSomeOut() {
@@ -69,7 +79,7 @@ class Main {
       myCounter.logEvent();
     }
     var result = myCounter.getEventCount(1);
-    console.log('result (should be 5): ', result)
+    console.log('result (should be 5): ', result);
   }
 
   testMultipleOutsideTimeFrame() {
@@ -79,7 +89,7 @@ class Main {
     }
     this._sleep(3000); //sleep 3 seconds
     var result = myCounter.getEventCount(1);
-    console.log('result (should be 0): ', result)
+    console.log('result (should be 0): ', result);
   }
 
 
@@ -89,14 +99,14 @@ class Main {
       myCounter.logEvent();
     }
     var result = myCounter.getEventCount(1);
-    console.log('result (should be 10): ', result)
+    console.log('result (should be 10): ', result);
   }
 
   testAskingInsideTimeFrame() {
     const myCounter: Counter = new Counter();
     myCounter.logEvent();
     var result = myCounter.getEventCount(1); //in the last second
-    console.log('result (should be 1): ', result)
+    console.log('result (should be 1): ', result);
   }
 
   testAskingOutsideTimeFrame() {
@@ -104,7 +114,7 @@ class Main {
     myCounter.logEvent();
     this._sleep(3000); //waiting 3 seconds
     var result = myCounter.getEventCount(1);
-    console.log('result (should be 0): ', result)
+    console.log('result (should be 0): ', result);
   }
 
   _sleep(milliseconds) {

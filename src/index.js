@@ -3,9 +3,9 @@ exports.__esModule = true;
 var counter_1 = require("./counter");
 var Main = /** @class */ (function () {
     function Main() {
-        this.run();
+        this.runTests();
     }
-    Main.prototype.run = function () {
+    Main.prototype.runTests = function () {
         this.testAskingOutsideTimeFrame();
         this.testAskingInsideTimeFrame();
         this.testMultipleInsideTimeFrame();
@@ -14,6 +14,15 @@ var Main = /** @class */ (function () {
         this.testMaxesOutTimeFrame();
         this.testContinuousAdditionTimeout();
         this.testEventCountDoesntChange();
+        this.testHighVolume();
+    };
+    Main.prototype.testHighVolume = function () {
+        var myCounter = new counter_1.Counter();
+        for (var i = 0; i < 1000000; i++) {
+            myCounter.logEvent();
+        }
+        var result = myCounter.getEventCount();
+        console.log('result (should be 1000000): ', result);
     };
     Main.prototype.testEventCountDoesntChange = function () {
         var myCounter = new counter_1.Counter();
@@ -39,17 +48,17 @@ var Main = /** @class */ (function () {
         var myCounter = new counter_1.Counter();
         for (var i = 0; i < 30; i++) {
             myCounter.logEvent();
-            this._sleep(1000); // sleep for a second
+            this._sleep(12 * 1000); // sleep for 12 seconds (total of 6 minutes)
         }
         var result = myCounter.getEventCount();
-        console.log('result (should be 20): ', result);
+        console.log('result (should be 25): ', result);
     };
     Main.prototype.testMaxesOutTimeFrame = function () {
         var myCounter = new counter_1.Counter();
         for (var i = 0; i < 5; i++) {
             myCounter.logEvent();
         }
-        this._sleep(30000); //sleep 30 seconds (currently MAX is set to 20 seconds)
+        this._sleep((5 * 60 * 1000) + 2); //sleep 5:02 minutes 
         for (var i = 0; i < 5; i++) {
             myCounter.logEvent();
         }

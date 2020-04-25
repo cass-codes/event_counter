@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-var MAX_TIME = 20; // commenting out for testing ease - 5*60 //5 minute max in seconds
+var MAX_TIME = 5 * 60; //5 minute max in seconds
 var SortedMap = require("collections/sorted-map");
 var Counter = /** @class */ (function () {
     function Counter() {
