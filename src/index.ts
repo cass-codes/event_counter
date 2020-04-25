@@ -58,10 +58,10 @@ class Main {
 
   testMaxesOutTimeFrame() {
     const myCounter: Counter = new Counter();
-    for (var i =0; i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
       myCounter.logEvent();
     }
-    this._sleep((5 * 60 * 1000) + 2); //sleep 5:02 minutes 
+    this._sleep(((5 * 60) +2) * 1000); //sleep 5:02 minutes 
     for (var i =0; i < 5; i++) {
       myCounter.logEvent();
     }

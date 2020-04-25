@@ -46,4 +46,4 @@ To run the suite of tests:
 * Navigate to the root directory of the project
 * `> tsc src/*.ts`
 * `> node src/index.js`
-Note: the whole thing does take 10 full mintues to run as it's currently implemented asynchronously. If you do not wish to wait you can comment out the tests you don't wish to run.
+Note: the whole thing does take more than 11 full minutes to run as it's currently implemented asynchronously. If you do not wish to wait you can comment out the tests you don't wish to run.
